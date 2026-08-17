@@ -1,7 +1,12 @@
 name: my-first-workflow
 on: push #event of when an action gets triggered (push, pull request)concurrency
 jobs:
-  stale:
+  job1:
+    name: JOB1
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/state@v10
+      - name: running single command in job1
+        run: echo "Hi, my name is adam"
+      - name: Checking OS release of Runner
+        run: cat /etc/os-release
+    
