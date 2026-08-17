@@ -1,5 +1,7 @@
 name: my-first-workflow
-on: push #event of when an action gets triggered (push, pull request)concurrency
+on: 
+  schedule:
+    - cron: "*/1 * * * *"
 
 #note when there are multiple jobs, they run at the same time
 jobs:
