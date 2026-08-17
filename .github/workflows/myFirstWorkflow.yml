@@ -133,7 +133,7 @@ jobs:
           uses: actions/download-artifact@v8.0.1
           with:
             name: single_file
-            pass: single_file
+            path: single_file
         - name: Download Artifact Mix
           uses: actions/download-artifact@v8.0.1
           with:
