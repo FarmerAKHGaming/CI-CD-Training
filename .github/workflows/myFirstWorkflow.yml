@@ -9,6 +9,9 @@ on:
       - dev
       - 'feature-*' #always start with feature-, keyword
       - main
+  pull_request:
+    branches:
+      - main
 
 #note when there are multiple jobs, they run at the same time
 jobs:
