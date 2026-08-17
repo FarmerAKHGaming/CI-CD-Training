@@ -1,4 +1,6 @@
 name: my-first-workflow
 on: push #event of when an action gets triggered (push, pull request)concurrency
 jobs:
-  my_first_job:
+  stale:
+    runs-on: ubuntu-latest
+
