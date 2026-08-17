@@ -19,4 +19,21 @@ jobs:
         run: echo "Hi, my name is adam"
       - name: Checking OS release of Runner
         run: cat /etc/os-release
-    
+  job3:
+      name: JOB3
+      needs: job1
+      runs-on: ubuntu-latest
+      steps:
+        - name: running single command in job1
+          run: echo "Hi, my name is adam"
+        - name: Checking OS release of Runner
+          run: cat /etc/os-release
+    job4:
+        name: JOB4
+        needs: [job1, job2, job3]
+        runs-on: ubuntu-latest
+        steps:
+          - name: running single command in job1
+            run: echo "Hi, my name is adam"
+          - name: Checking OS release of Runner
+            run: cat /etc/os-release
