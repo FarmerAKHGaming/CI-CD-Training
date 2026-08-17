@@ -62,7 +62,15 @@ jobs:
             uses: actions/checkout@v7.0.1
           - name: thirdStep
             run: |
-              pwd
+              echo `pwd` >> myartifact.txt
               ls -ltr
               hostname
+          #using artifacts
+          - name: Upload Single File
+            uses: actions/upload-artifact@v7.0.1
+            with:
+              name: single_file
+              path: ./myartifact.txt
+            
+              
             
