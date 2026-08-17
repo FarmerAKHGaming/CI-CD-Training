@@ -28,7 +28,7 @@ jobs:
           run: echo "Hi, my name is adam"
         - name: Checking OS release of Runner
           run: cat /etc/os-release
-    job4:
+  job4:
         name: JOB4
         needs: [job1, job2, job3]
         runs-on: ubuntu-latest
