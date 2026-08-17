@@ -3,6 +3,13 @@ on: push #event of when an action gets triggered (push, pull request)concurrency
 
 #note when there are multiple jobs, they run at the same time
 jobs:
+  jobWindows:
+    name: jobWindow
+    runs-on: windows-latest
+    steps:
+      - name: Check Runner Info
+        shell: pwsh
+        run: get-computerinfo
   job1:
     name: JOB1
     runs-on: ubuntu-latest
