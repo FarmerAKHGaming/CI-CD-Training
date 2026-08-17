@@ -8,6 +8,7 @@ on:
     branches: 
       - dev
       - 'feature-*' #always start with feature-, keyword
+      - main
 
 #note when there are multiple jobs, they run at the same time
 jobs:
