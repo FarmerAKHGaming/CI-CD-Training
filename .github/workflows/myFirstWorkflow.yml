@@ -1,7 +1,9 @@
 name: my-first-workflow
 on: 
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "5 * * * *"
+  workflow_dispatch:
+  push:
 
 #note when there are multiple jobs, they run at the same time
 jobs:
