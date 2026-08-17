@@ -53,13 +53,13 @@ jobs:
         name: actions1
         runs-on: ubuntu-latest
         steps:
-          - name: firstStep
+          - name: firststep - Checkout
+            uses: actions/checkout@v7.0.1
+          - name: secondstep
             run: |
               echo `pwd` >> myartifact.txt
               ls -ltr
               hostname
-          - name: secondStep - Checkout
-            uses: actions/checkout@v7.0.1
           - name: thirdStep - singleFile
             uses: actions/upload-artifact@v7.0.1
             with:
