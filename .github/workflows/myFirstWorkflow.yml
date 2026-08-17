@@ -63,14 +63,20 @@ jobs:
           - name: thirdStep
             run: |
               echo `pwd` >> myartifact.txt
-              ls -ltr
-              hostname
+              mkdir artifacts
+              echo `ls -ltr` >> artifacts/lists.txt
+              echo `hostname` >> artifacts/hostname.txt
           #using artifacts
-          - name: Upload Single File
+          - name: Multiple paths with exclusions
             uses: actions/upload-artifact@v7.0.1
             with:
-              name: single_file
-              path: ./myartifact.txt
+              name: Get all files and directories
+              path: |
+                ./myartifact.txt
+                artifacts/
+                !**/hostname.txt 
+          #exclude
+  
             
               
             
