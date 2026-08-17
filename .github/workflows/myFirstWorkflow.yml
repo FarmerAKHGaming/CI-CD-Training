@@ -74,7 +74,7 @@ jobs:
           - name: multiple_path_with_exclusion
             uses: actions/upload-artifact@v7.0.1
             with:
-              name: Get all files and directories
+              name: directory_file_mix
               path: |
                 ./myartifact.txt
                 artifacts/
@@ -93,6 +93,24 @@ jobs:
           uses: actions/download-artifact@v8.0.1
           with:
             name: single_file
+        - name: checking current directory post download
+          run: |
+            pwd
+            ls -ltr
+
+  downloadDirectory:
+      name: Download Directory
+      needs: actionsCheckout
+      runs-on: ubuntu-latest
+      steps:
+        - name: checking current dir
+          run: |
+            pwd
+            ls -ltr
+        - name: Download single file artifact
+          uses: actions/download-artifact@v8.0.1
+          with:
+            name: directory_file_mix
         - name: checking current directory post download
           run: |
             pwd
