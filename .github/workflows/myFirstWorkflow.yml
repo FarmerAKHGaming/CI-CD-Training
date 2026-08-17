@@ -48,3 +48,21 @@ jobs:
             run: echo "Hi, my name is adam"
           - name: Checking OS release of Runner
             run: cat /etc/os-release
+
+  actionsCheckout:
+        name: actions1
+        runs-on: ubuntu-latest
+        steps:
+          - name: firstStep
+            run: |
+              pwd
+              ls -ltr
+              hostname
+          - name: secondStep - Checkout
+            uses: actions/checkout@v7.0.1
+          - name: thirdStep
+            run: |
+              pwd
+              ls -ltr
+              hostname
+            
