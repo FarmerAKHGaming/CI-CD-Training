@@ -1,184 +1,31 @@
-name: my-first-workflow
-on: 
-  schedule:
-    - cron: "5 * * * *"
-  workflow_dispatch:
-  #can choose branches
+name: self-hosted-runner
+on:
   push:
-    branches: 
-      - dev
-      - 'feature-*' #always start with feature-, keyword
-      - main
-  pull_request:
     branches:
-      - main
-env:
-  ENV_TYPE: DEV
-  APP_USER: thinknyx
-  APP_PORT: 80
-#note when there are multiple jobs, they run at the same time
+      - dev
 jobs:
-  jobWindows:
-    name: jobWindow
-    runs-on: windows-latest
-    steps:
-      - name: Check Runner Info
-        shell: pwsh
-        run: get-computerinfo
-  job1:
-    name: JOB1
+  demo-1:
+    name: Demo Job 1
     runs-on: ubuntu-latest
     steps:
-      - name: running single command in job1
-        run: echo "Hi, my name is adam"
-      - name: Checking OS release of Runner
-        run: cat /etc/os-release
-  job2:
-    name: JOB2
-    runs-on: ubuntu-latest
-    steps:
-      - name: running single command in job1
-        run: echo "Hi, my name is adam"
-      - name: Checking OS release of Runner
-        run: cat /etc/os-release
-  job3:
-      name: JOB3
-      needs: job1
-      runs-on: ubuntu-latest
-      steps:
-        - name: running single command in job1
-          run: echo "Hi, my name is adam"
-        - name: Checking OS release of Runner
-          run: cat /etc/os-release
-  job4:
-        name: JOB4
-        needs: [job1, job2, job3]
-        runs-on: ubuntu-latest
-        steps:
-          - name: running single command in job1
-            run: echo "Hi, my name is adam"
-          - name: Checking OS release of Runner
-            run: cat /etc/os-release
-
-  actionsCheckout:
-        name: actions1
-        runs-on: ubuntu-latest
-        steps:
-          - name: firststep - Checkout
-            uses: actions/checkout@v7.0.1
-          - name: secondstep
-            run: |
-              echo `pwd` >> myartifact.txt
-              ls -ltr
-              hostname
-          - name: thirdStep - singleFile
-            uses: actions/upload-artifact@v7.0.1
-            with:
-              name: single_file
-              path: ./myartifact.txt
-          - name: Have multiple artifacts and options (file and nondirectory)
-            run: |
-              mkdir artifacts
-              echo `ls -ltr` >> artifacts/lists.txt
-              echo `hostname` >> artifacts/hostname.txt
-          #using artifacts
-          - name: multiple_path_with_exclusion
-            uses: actions/upload-artifact@v7.0.1
-            with:
-              name: directory_file_mix
-              path: |
-                ./myartifact.txt
-                artifacts/
-                !**/hostname.txt 
-          #exclude
-  downloadCheckout:
-      name: Download Artifact
-      needs: actionsCheckout
-      runs-on: ubuntu-latest
-      steps:
-        - name: checking current dir
-          run: |
-            pwd
-            ls -ltr
-        - name: Download single file artifact
-          uses: actions/download-artifact@v8.0.1
-          with:
-            name: single_file
-        - name: checking current directory post download
-          run: |
-            pwd
-            ls -ltr
-
-  downloadDirectory:
-      name: Download Directory
-      needs: actionsCheckout
-      runs-on: ubuntu-latest
-      steps:
-        - name: checking current dir
-          run: |
-            pwd
-            ls -ltr
-        - name: Download Artifact Mix
-          uses: actions/download-artifact@v8.0.1
-          with:
-            name: directory_file_mix
-        - name: checking current directory post download
-          run: |
-            pwd
-            ls -ltr
-
-  downloadCustomDirectory:
-      name: Download Custom Directory
-      needs: actionsCheckout
-      runs-on: ubuntu-latest
-      steps:
-        - name: create custom folder for download
-          run: |
-            mkdir -p single_file
-            mkdir -p download_directory
-        - name: checking current dir
-          run: |
-            pwd
-            ls -ltr
-        - name: Download single file artifact
-          uses: actions/download-artifact@v8.0.1
-          with:
-            name: single_file
-            path: single_file
-        - name: Download Artifact Mix
-          uses: actions/download-artifact@v8.0.1
-          with:
-            name: directory_file_mix
-            path: download_directory
-        - name: checking current directory post download
-          run: |
-            pwd
-            echo "CHECKING SINGLE FILE DIRECTORY"
-            ls -ltr single_file
-            echo "CHECKING DIRECTORY ARTIFACTS"
-            ls -ltr download_directory
-  envPractice:
-    name: envPractice
-    needs: job1
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download artifact with env variables.
+      - name: Display system information.
         run: |
-          echo "[INFO] Running Deployment for $ENV_TYPE with user $APP_USER."
-          echo "[INFO] Once deployment application is accessible on port $APP_PORT."
-      - name: Referring repo secrets.
-        run: |
-          echo "[INFO] Application password is ${{ secrets.APP_PASSWORD }}"
-  builtInVar:
-    name: builtInVar
-    runs-on: ubuntu-latest
+          echo "Hostname: $(hostname)"
+          echo "OS Version:"
+          lsb_release -a || cat /etc/os-release
+          echo "Runner Name: ${{ runner.name }}"
+          echo "Runner OS: ${{ runner.os }}"
+  demo-2:
+    name: Demo Job 2
+    runs-on: self-hosted
     steps:
-      - name: Referencing context or built-in variables
+      - name: Display system information.
         run: |
-          echo "[INFO] Triggered by ${{ github.event_name }}
-          echo "[INFO] New changes are added by ${{ github.actor }} in ${{ github.ref_name }} branch.
-          echo "[INFO] Current Step is running on ${{ runner.os }}"
-          echo "[INFO] Current JOB ID is ${{ job.check_run_id }}"
+          echo "Hostname: $(hostname)"
+          echo "OS Version:"
+          lsb_release -a || cat /etc/os-release
+          echo "Runner Name: ${{ runner.name }}"
+          echo "Runner OS: ${{ runner.os }}"
         
   
             
